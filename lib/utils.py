@@ -14,6 +14,12 @@ def inputText(prompt='What next?'):
     ret = raw_input('>> ')
     return ret
 
+def inputCMD(prompt='What next?'):
+    print(prompt)
+    ret = raw_input('>> ')
+    ret = ret.split()
+    return ret
+
 def inputBool(prompt='Yes or No?'):
     print(prompt)
     while True:
@@ -31,7 +37,15 @@ def getPlayerInfo():
         if confirm:
             return sInput
             
-def parseInput(player, sInput, Commands):
+def parseInput(player, command, validCommands):
     """Parses and runs the given command if valid"""
-    if sInput in Commands.iterkeys():
-        Commands[sInput](player)
+    assert isinstance(command, list)
+    cmd = command.pop(0)
+    if cmd in Commands.iterkeys():
+        ret = Commands[cmd](player, *commands)
+        return ret
+        
+        
+def clearScreen():
+    """Prints 1000 newlines to the terminal to clear screen"""
+    print('\n' * 100)

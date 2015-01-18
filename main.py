@@ -14,18 +14,28 @@ from lib.container import *
 from lib.item import *
 
 def inInventory():
-    pass
-
+    while True:
+        sInput = inputText()
+        ret = parseInput(player, sInput, invCommands)
+        if ret == 'back':
+            break
+        else:
+            print(ret)
 
 def inBattle():
-    pass
+    clearScreen()
+    print('Entering Battle...')
+    while True:
+        pass
+
 
 def main():
     playerName = getPlayerInfo()
     player = Player(playerName)    
     while True:
-        sInput = inputText()
-        parseInput(player, sInput, Commands)
+        command = inputCMD()
+        ret = parseInput(player, command, Commands)
+        
 
 if __name__ == "__main__":
     main()
