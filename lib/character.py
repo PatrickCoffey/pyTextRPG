@@ -7,8 +7,9 @@ pyTextRPG - lib/character.py
 This module houses the character base class. It is inherited by all
 characters in the game.
 """
+from entity import Entity
 
-class CharacterBase(object):
+class CharacterBase(Entity):
     """
     characterBase:
     ==============

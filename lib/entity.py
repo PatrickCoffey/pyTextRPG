@@ -5,23 +5,25 @@
 pyTextRPG - lib/entity.py
 ============================
 This module houses the entity class. It is inherited by all
-entitys in the game.
+entities in the game.
 """
 
-class Entity:
+class Entity(object):
     """
     Entity
     ======
     Represents an entity. Callable to update the entity's position.
     """
 
-    def __init__(self, size, x, y):
-        self.x, self.y = x, y
-        self.size = size
+    location = object
+    
+    def __init__(self, location):
+        self.location = location
 
-    def __call__(self, x, y):
+    def __call__(self, location):
         """update the position of the entity."""
-        self.x, self.y = x, y
+        self.location = location
+     
 
 if __name__ == '__main__':
     pass
