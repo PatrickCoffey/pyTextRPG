@@ -8,6 +8,7 @@ This module houses various utilities used throughout the game.
 Most things that dont belong to a particular class type will be here.
 """
 
+
 def inputText(prompt='What next?'):
     print(prompt)
     ret = raw_input('>> ')
@@ -30,3 +31,7 @@ def getPlayerInfo():
         if confirm:
             return sInput
             
+def parseInput(player, sInput, Commands):
+    """Parses and runs the given command if valid"""
+    if sInput in Commands.iterkeys():
+        Commands[sInput](player)

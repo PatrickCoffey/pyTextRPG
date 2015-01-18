@@ -8,13 +8,24 @@ This is the main loop for the game.
 """
 
 from lib.utils import *
-from lib.player import Player
+from lib.character import *
+from lib.commands import *
+from lib.container import *
+from lib.item import *
+
+def inInventory():
+    pass
+
+
+def inBattle():
+    pass
 
 def main():
+    playerName = getPlayerInfo()
+    player = Player(playerName)    
     while True:
-        playerName = getPlayerInfo()
-        player = Player(playerName)
-        
+        sInput = inputText()
+        parseInput(player, sInput, Commands)
 
 if __name__ == "__main__":
     main()
