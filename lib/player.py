@@ -4,17 +4,17 @@
 """
 pyTextRPG - lib/player.py
 =========================
-This module houses the player's class. It inherits character base
-like all characters in the game.
+This module houses the player's class. 
 """
 
 from character import CharacterBase
 
 class Player(CharacterBase):
     """
-    characterBase:
-    ==============
-    This is the base of the character class.
+    Player:
+    =======
+    This is the players character.
+    It inherits character base like all characters in the game.
     """
     
     name = ''

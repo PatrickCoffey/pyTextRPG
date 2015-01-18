@@ -4,8 +4,7 @@
 """
 pyTextRPG - lib/enemy.py
 ========================
-This module houses the enemy's class. It inherits character base
-like all characters in the game.
+This module houses the enemy's class. 
 """
 
 from character import CharacterBase
@@ -15,6 +14,7 @@ class Enemy(CharacterBase):
     enemy:
     ======
     This is the enemy class.
+    It inherits character base like all characters in the game.
     """
     
     name = ''
