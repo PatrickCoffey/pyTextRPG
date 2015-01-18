@@ -44,20 +44,20 @@ class Inventory(Container):
         Container.__init__(self, name)
         self.description = description
         
-    def addItem(self, Item, Quantity):
+    def _addItem(self, Item, quantity=1):
         """Adds an item to the container"""
         if self._containsItem(Item):
-            self[Item.name].quantity += Quantity
+            self[Item.name].quantity += quantity
         else:
             self[Item.name] = Item
-            self[Item.name].quantity = Quantity
+            self[Item.name].quantity = quantity
             self[Item.name]._refresh()
     
-    def removeItem(self, Item, Quantity):
+    def _removeItem(self, Item, quantity=1):
         """Removes an item if in container"""
         if self._containsItem(Item):
-            self[Item.name].quantity -= Quantity
-            return Quantity + ' ' + Item.name + '\'s removed'
+            self[Item.name].quantity -= quantity
+            return quantity + ' ' + Item.name + '\'s removed'
         else:
             return Item.name + ' is not in this container'    
 
@@ -86,7 +86,7 @@ class Equipment(Container):
         self['Left Hand'] = None
         self['Right Hand'] = None        
 
-    def equipItem(self, item, slot):
+    def _equipItem(self, item, slot):
         """equips new item and returns previous item from slot, None if nothing already equipped"""
         if self[slot] == None:
             self[slot] = item
@@ -96,7 +96,7 @@ class Equipment(Container):
             self[slot] = item
             return retItem
         
-    def unequipItem(self, slot):
+    def _unequipItem(self, slot):
         """Returns previous item from slot, None if nothing equipped"""
         if self[slot] == None:
             return None

@@ -13,12 +13,16 @@ from lib.commands import *
 from lib.container import *
 from lib.item import *
 
-def inInventory():
+def inInventory(player):
+    clearScreen()
+    printCurrentItems(player)
     while True:
-        sInput = inputText()
+        sInput = inputCMD()
         ret = parseInput(player, sInput, invCommands)
         if ret == 'back':
             break
+        elif ret == 'show':
+            printCurrentItems(player)  
         else:
             print(ret)
 
@@ -35,6 +39,9 @@ def main():
     while True:
         command = inputCMD()
         ret = parseInput(player, command, Commands)
+        
+        if ret == "inv":
+            inInventory(player)
         
 
 if __name__ == "__main__":

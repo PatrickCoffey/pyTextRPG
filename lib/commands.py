@@ -19,15 +19,7 @@ def help(player, *args):
     
 def inv(player, *args):
     """Shows the inventory of current player"""
-    print('Equipment:')
-    for slot, item in player.equipment.items():
-        if item != None:
-            print(' * [' + slot.capitalize() + '] - ' + item.name)
-    print('Inventory:')
-    for item in player.inventory.itervalues():
-        if item != None:
-            print(' * ' + item.name + ' x' + str(item.quantity))
-    print('\n')
+    return 'inv'
         
         
 def confront(player, *args):
@@ -68,9 +60,14 @@ def back(player, *args):
     """Shows available commands"""
     return('back')
 
+def show(player, *args):
+    """Shows available commands"""
+    return('show')
+
 invCommands = {'help': invHelp,
-            'equip' : equip,
-            'unequip' : unequip,
-            'back': back,
-            'exit': exit
+               'show': show,
+               'equip' : equip,
+               'unequip' : unequip,
+               'back': back,
+               'exit': exit
 }

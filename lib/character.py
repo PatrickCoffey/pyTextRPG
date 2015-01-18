@@ -38,6 +38,35 @@ class CharacterBase(Entity):
         else:
             character.health = life
             
+    def equipItem(self, item, slot):
+        """Equips an item if there is currently one in inventory and it can be equipped"""
+        if self.inventory._containsItem(item):
+            iEquip = self.inventory.get(item.name)
+            self.equipment._equipItem(item, slot)
+            self.inventory._removeItem(iEquip, 1)
+            return 'Equipped [' + item.name + '] to [' + slot + ']!'
+        else:
+            return 'Player does not have [' + item.name + '] to equip!'
+    
+    def unequipItem(self, slot):
+        """Unequips item from slot if item equipped to slot and returns to inventory"""
+        item = self.equipment[slot]
+        if item != None:
+            iUnequip = self.equipment._unequipItem(slot)
+            self.inventory._addItem(iUnequip, 1)
+            return 'Unequipped [' + item.name + '] from [' + slot + ']!'
+        else:
+            return 'Player does not have [' + item.name + '] equipped!'
+            
+    
+    def getItem(self, container, item, quantity=1):
+        """Get an Item from a container and add to characters inventory"""
+        pass
+    
+    def putItem(self, container, item, quantity=1):
+        """Put an Item from Characters inventory into container"""
+        pass
+            
     def _refreshEquip(self):
         self._calcArmor()
         self._calcDamage()
@@ -64,9 +93,9 @@ class Player(CharacterBase):
         
     def _startItems(self):
         gold = Gold()
-        self.inventory.addItem(gold, 500)
+        self.inventory._addItem(gold, 500)
         weapon1 = Weapon('Broken Sword', 'The hilt of a broken sword')
-        self.equipment.equipItem(weapon1, 'Right Hand')       
+        self.inventory._addItem(weapon1) 
 
 class Enemy(CharacterBase):
     """

@@ -39,12 +39,22 @@ def getPlayerInfo():
             
 def parseInput(player, command, validCommands):
     """Parses and runs the given command if valid"""
-    assert isinstance(command, list)
     cmd = command.pop(0)
-    if cmd in Commands.iterkeys():
-        ret = Commands[cmd](player, *commands)
+    if cmd in validCommands.iterkeys():
+        ret = validCommands[cmd](player, *command)
         return ret
         
+def printCurrentItems(player):
+    print('      ** ' + player.name + '\'s Items ** ')
+    print('Equipment:')
+    for slot, item in player.equipment.items():
+        if item != None:
+            print(' * [' + slot.capitalize() + '] - ' + item.name)
+    print('Inventory:')
+    for item in player.inventory.itervalues():
+        if item != None:
+            print(' * ' + item.name + ' x' + str(item.quantity))
+    print('\n')     
         
 def clearScreen():
     """Prints 1000 newlines to the terminal to clear screen"""
