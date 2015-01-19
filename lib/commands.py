@@ -44,7 +44,13 @@ def invHelp(player, *args):
     
 def equip(player, *args):
     """Shows available commands"""
-    pass
+    if args.count == 2:
+        if str(args[0]).lower() in player.equipment.iterKeys():
+            retItem = player.equipment._equipItem(args[1])
+            player.inventory.addItem(retItem, retItem.quantity)
+            return args[0] + " unequipped!"
+    else:
+        return "Invalid Syntax"    
 
 def unequip(player, *args):
     """Shows available commands"""

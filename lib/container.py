@@ -22,8 +22,8 @@ class Container(dict):
         self.name = name
     
     def _containsItem(self, itemCheck):
-        for item in self:
-            if item.name == itemCheck.name:
+        for item in self.iterkeys():
+            if item == itemCheck.name:
                 return True
         return False
 
@@ -83,8 +83,8 @@ class Equipment(Container):
         self['Legs'] = None
         self['Boots'] = None
         self['Gloves'] = None
-        self['Left Hand'] = None
-        self['Right Hand'] = None        
+        self['Left_Hand'] = None
+        self['Right_Hand'] = None        
 
     def _equipItem(self, item, slot):
         """equips new item and returns previous item from slot, None if nothing already equipped"""

@@ -94,7 +94,7 @@ class Player(CharacterBase):
     def _startItems(self):
         gold = Gold()
         self.inventory._addItem(gold, 500)
-        weapon1 = Weapon('Broken Sword', 'The hilt of a broken sword')
+        weapon1 = Weapon('Broken_Sword', 'The hilt of a broken sword')
         self.inventory._addItem(weapon1) 
 
 class Enemy(CharacterBase):
