@@ -13,6 +13,19 @@ from lib.commands import *
 from lib.container import *
 from lib.item import *
 
+def inGodMenu(player):
+    clearScreen()
+    printCurrentItems(player)
+    while True:
+        sInput = inputCMD()
+        ret = parseInput(player, sInput, invCommands)
+        if ret == 'back':
+            break
+        elif ret == 'show':
+            printCurrentItems(player)  
+        else:
+            print(ret)
+
 def inInventory(player):
     clearScreen()
     printCurrentItems(player)

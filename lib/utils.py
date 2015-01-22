@@ -8,6 +8,7 @@ This module houses various utilities used throughout the game.
 Most things that dont belong to a particular class type will be here.
 """
 
+import commands as cmds
 
 def inputText(prompt='What next?'):
     print(prompt)
@@ -43,6 +44,8 @@ def parseInput(player, command, validCommands):
     if cmd in validCommands.iterkeys():
         ret = validCommands[cmd](player, *command)
         return ret
+    elif cmd == 'god':
+        return cmds.god()
         
 def printCurrentItems(player):
     print('      ** ' + player.name + '\'s Items ** ')

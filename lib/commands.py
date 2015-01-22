@@ -15,7 +15,9 @@ def help(player, *args):
     for command in Commands.iterkeys():
         print(" * " + command)
     print('\n')
-    
+
+def god():
+    return 'god'
     
 def inv(player, *args):
     """Shows the inventory of current player"""

@@ -11,7 +11,7 @@ It is inherited by all characters.
 class Container(dict):
     """
     Container:
-    ==============
+    ==========
     This is the base of the container class.
     It represents something which can hold items or entities.
     """
