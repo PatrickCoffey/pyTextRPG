@@ -33,8 +33,9 @@ def search(player, *args):
     if str(args[0]).lower() == 'room':
         searchRoom(player)
         return
-    for container in player.location.containers:
-        pass
+    for conName, container in player.location.containers:
+        if str(args[0]).lower() == conName.lower():
+            print(container._listItems())
         
 
 def searchRoom(player):
@@ -106,6 +107,41 @@ invCommands = {'help': invHelp,
                'show': show,
                'equip' : equip,
                'unequip' : unequip,
+               'back': back,
+               'exit': exit
+}
+
+def conHelp(player, *args):
+    pass
+
+def get(player, *args):
+    """Shows available commands"""
+    if len(args) == 1:
+        if player.location.containers != None:
+            for container in player.location.containers:
+                if str(args[0]).lower() == container.name.lower():
+                    conFrom = container
+                    break
+                else:
+                    return "No container named " + str(args[0]) + " in this room"
+            for itemName, item in conFrom.iteritems():
+                if str(args[1]).lower() == str(itemName).lower():
+                    grabbedItem = item
+                    conFrom._removeItem(item)
+                    player.inventory._addItem(grabbedItem)
+                else:
+                    return "No item named " + str(args[1]) + " in " + str(args[0])
+    else:
+        return "Invalid Syntax"
+
+#def put(player, *args):
+    #"""Shows available commands"""
+    #pass
+
+conCommands = {'help': conHelp,
+               'show': show,
+               'get' : get,
+               #'put' : put,
                'back': back,
                'exit': exit
 }

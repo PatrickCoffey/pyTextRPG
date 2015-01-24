@@ -26,6 +26,12 @@ class Container(dict):
                 return True
         return False
     
+    def _listItems(self):
+        ret = ''
+        for item in self.keys():
+            ret = item + '\n'
+        return ret
+    
     def _addItem(self, Item):
         """Adds an item to the container"""
         if self._containsItem(Item):

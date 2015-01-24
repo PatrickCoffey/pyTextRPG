@@ -75,11 +75,11 @@ def clearScreen():
     #print('\n' * 100)
     
 def randomChest():
-    items = randomItems(1,10)
+    items = randomItems(5)
     chest = Chest(items)
     return chest
 
-def randomItems(iMin, iMax):
+def randomItems(iMax):
     ret = []
     junk = ItemJunk
     while counter < iMax:

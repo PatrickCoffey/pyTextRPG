@@ -45,13 +45,25 @@ def inInventory(player):
             printCurrentItems(player)  
         else:
             print(ret)
+            
+def inContainer(player, container):
+    clearScreen()
+    print(container._listItems())
+    while True:
+        sInput = list(inputCMD('(' + container.name + ') What Next?'))
+        ret = parseInput(player, conCommands, *sInput)
+        if ret == 'back':
+            break
+        elif ret == 'show':
+            print(container._listItems())  
+        else:
+            print(ret)
 
 def inBattle(player):
     clearScreen()
     print('Entering Battle...')
     while True:
         pass
-
 
 def main():
     playerName = getPlayerInfo()
