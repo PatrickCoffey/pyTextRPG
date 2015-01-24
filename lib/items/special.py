@@ -20,6 +20,6 @@ class doublePluggers(Armor, Weapon):
     def __init__(self, name='Double Pluggers', description='\'STRAYA!', value=1000, quantity=1, armor=0):
         Armor.__init__(self, name, description, value, quantity, 3)
         Weapon.__init__(self, name, description, value, quantity, [1,25])
-        self.type = ('Armor, Weapon')
-        self.slot = ('Boots', 'Left_Hand', 'Right_Hand')
+        self.type = ['Armor, Weapon']
+        self.slot = ['Boots', 'Left_Hand', 'Right_Hand']
         

@@ -22,8 +22,7 @@ class Container(dict):
         self.name = name
     
     def _containsItem(self, itemCheck):
-        for item in self.iterkeys():
-            if item == itemCheck.name:
+        if str(itemCheck).lower() in str(self.keys()).lower():
                 return True
         return False
 
@@ -56,8 +55,10 @@ class Inventory(Container):
     def _removeItem(self, Item, quantity=1):
         """Removes an item if in container"""
         if self._containsItem(Item):
-            self[Item.name].quantity -= quantity
-            return quantity + ' ' + Item.name + '\'s removed'
+            if self[Item.name].quantity <= quantity:
+                del self[Item.name]
+            else:
+                self[Item.name].quantity -= quantity
         else:
             return Item.name + ' is not in this container'    
 
@@ -78,21 +79,19 @@ class Equipment(Container):
     def __init__(self, name='Equipment', description='Currently equipped items'):
         Container.__init__(self, name)
         self.description = description
-        self['Helm'] = None
-        self['Chest'] = None
-        self['Legs'] = None
-        self['Boots'] = None
-        self['Gloves'] = None
-        self['Left_Hand'] = None
-        self['Right_Hand'] = None        
+        self['helm'] = None
+        self['chest'] = None
+        self['legs'] = None
+        self['boots'] = None
+        self['gloves'] = None
+        self['left_hand'] = None
+        self['right_hand'] = None        
 
     def _equipItem(self, item, slot):
         """equips new item and returns previous item from slot, None if nothing already equipped"""
         
-        if item.type == 'Armor':
-            if not slot in item.slot:
-                return "I can't put that there!"
-        if item.type == 'Weapon'
+        if not str(slot).lower() in str(item.slot).lower():
+            return "I can't put that there!"
         if self[slot] == None:
             self[slot] = item
             return None
@@ -107,6 +106,7 @@ class Equipment(Container):
             return None
         else:
             retItem = self[slot]
+            self[slot] = None
             return retItem 
         
 

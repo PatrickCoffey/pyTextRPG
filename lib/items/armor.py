@@ -17,10 +17,9 @@ class clothChest(Armor):
     """
 
     def __init__(self, name='Cloth (chest)', description='a tattered cloth', value=1, quantity=1, armor=0):
-        Item.__init__(self, name, description, value, quantity)
+        Armor.__init__(self, name, description, value, quantity)
         self.armor = armor
-        self.type = 'Armor'
-        self.slot = 'Chest'
+        self.slot = ['Chest']
         
 class clothLegs(Armor):
     """
@@ -28,10 +27,8 @@ class clothLegs(Armor):
     ==========
     This is the starting armor.
     """
-
+    
     def __init__(self, name='Cloth (legs)', description='a tattered cloth', value=1, quantity=1, armor=0):
-        Item.__init__(self, name, description, value, quantity)
-        self.armor = armor
-        self.type = 'Armor'
-        self.slot = 'Legs'
+        Armor.__init__(self, name, description, value, quantity)
+        self.slot.append('Legs')
         

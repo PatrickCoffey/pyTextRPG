@@ -46,21 +46,21 @@ def invHelp(player, *args):
     
 def equip(player, *args):
     """Shows available commands"""
-    if args.count == 2:
-        if str(args[0]).lower() in player.equipment.iterKeys():
-            retItem = player.equipment._equipItem(args[1])
-            player.inventory.addItem(retItem, retItem.quantity)
-            return args[0] + " unequipped!"
+    if len(args) == 2:
+        if str(args[1]).lower() in str(player.equipment.keys()).lower():
+            ret = player.equipItem(*args)
+            return ret
+        else:
+            return 'derp'
     else:
-        return "Invalid Syntax"    
+        return "Invalid Syntax"  
 
 def unequip(player, *args):
     """Shows available commands"""
-    if args.count == 2:
-        if str(args[0]).lower() == 'slot':
-            retItem = player.equipment.unequipItem(args[1])
-            player.inventory.addItem(retItem, retItem.quantity)
-            return args[0] + " unequipped!"
+    if len(args) == 1:
+        if str(args[0]).lower() in str(player.equipment.keys()).lower():
+            ret = player.unequipItem(args[0])
+            return ret
     else:
         return "Invalid Syntax"
 

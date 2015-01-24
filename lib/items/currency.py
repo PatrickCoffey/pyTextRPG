@@ -15,3 +15,4 @@ class Gold(Currency):
     =====
     This is the most basic currency
     """
+    pass

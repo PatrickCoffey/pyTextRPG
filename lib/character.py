@@ -9,7 +9,12 @@ This module houses the character classes.
 
 from entity import *
 from container import *
-from items import *
+from items.currency import *
+from items.weapons import *
+from items.armor import *
+from items.potions import *
+from items.special import *
+from items.items import *
 
 class CharacterBase(Entity):
     """
@@ -41,12 +46,20 @@ class CharacterBase(Entity):
     def equipItem(self, item, slot):
         """Equips an item if there is currently one in inventory and it can be equipped"""
         if self.inventory._containsItem(item):
-            iEquip = self.inventory.get(item.name)
-            self.equipment._equipItem(item, slot)
-            self.inventory._removeItem(iEquip, 1)
-            return 'Equipped [' + item.name + '] to [' + slot + ']!'
+            iEquip = None
+            for itemCheck in self.inventory.values():
+                if itemCheck.lowName == item:
+                    iEquip = itemCheck
+                    self.inventory._removeItem(itemCheck)
+            equipRet = self.equipment._equipItem(iEquip, slot)
+            if isinstance(equipRet, str):
+                return equipRet
+            if isinstance(equipRet, Item):
+                self.inventory._addItem(equipRet)
+            self._refreshEquip()
+            return 'Equipped "' + item + '" to [' + slot + ']!'
         else:
-            return 'Player does not have [' + item.name + '] to equip!'
+            return 'Player does not have a "' + item + '" to equip!'
     
     def unequipItem(self, slot):
         """Unequips item from slot if item equipped to slot and returns to inventory"""
@@ -54,6 +67,7 @@ class CharacterBase(Entity):
         if item != None:
             iUnequip = self.equipment._unequipItem(slot)
             self.inventory._addItem(iUnequip, 1)
+            self._refreshEquip()
             return 'Unequipped [' + item.name + '] from [' + slot + ']!'
         else:
             return 'Player does not have [' + item.name + '] equipped!'
@@ -72,10 +86,23 @@ class CharacterBase(Entity):
         self._calcDamage()
         
     def _calcArmor(self):
-        pass
+        val = 0
+        for item in self.equipment.values():
+            if item != None:
+                if 'Armor' in item.type:
+                    val += item.armor
+        self.armor = val
     
     def _calcDamage(self):
-        pass
+        valMax = 0
+        valMin = 0
+        for item in self.equipment.values():
+            if item != None:
+                if 'Weapon' in item.type:
+                    valMin += item.damageMin
+                    valMax += item.damageMax
+        self.damageMin = valMin + self.baseDamage
+        self.damageMax = valMax + self.baseDamage
         
 class Player(CharacterBase):
     """
@@ -92,10 +119,8 @@ class Player(CharacterBase):
         self._refreshEquip()
         
     def _startItems(self):
-        gold = Gold()
-        self.inventory._addItem(gold, 500)
-        weapon1 = Weapon('Broken_Sword', 'The hilt of a broken sword')
-        self.inventory._addItem(weapon1) 
+        self.inventory._addItem(Gold(), 500)
+        self.inventory._addItem(BrokenSword()) 
 
 class Enemy(CharacterBase):
     """

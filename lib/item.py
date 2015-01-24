@@ -21,23 +21,27 @@ class Item(object):
     """
     
     name = ''
+    lowName = ''
     description = ''
     quantity = 1
     owner = None
+    type = []
     
     
-    def __init__(self, name='Thing', description='a thing', value=1, quantity=1, owner=None):
+    def __init__(self, name='Thing', description='a thing', value=1, quantity=1):
         self.name = name
+        self.lowName = name.lower()
         self.description = description
         self.value = value
         self.quantity = quantity
-        self.owner = owner
+        self.type = ['Item']
         self._refresh()     
     
-    def _refresh(self, owner=None):
+    def __str__(self):
+        return self.lowName
+    
+    def _refresh(self):
         self.netValue = (self.value * self.quantity)
-        if owner != None:
-            self.owner = owner
         
     def _checkQuant(self, quantity):
         if self.quantity >= quantity:
@@ -55,15 +59,13 @@ class Weapon(Item):
     Most non entities inherit from this.
     """
     
-    name = ''
-    description = ''
-    quantity = 1
-    
+    slot =[]
     
     def __init__(self, name='Blade', description='a small blade', value=1, quantity=1, damage=[1,1]):
         Item.__init__(self, name, description, value, quantity)
         self.damageMin = damage[0]
         self.damageMax = damage[1]
+        self.type.append('Weapon')
         
     def _calcDamage(self, character):
         dmg = random.randint(self.damageMin, self.damageMax) - character.armor
@@ -81,11 +83,13 @@ class Armor(Item):
     It represents an object.
     Most non entities inherit from this.
     """
+    
+    slot =[]
 
     def __init__(self, name='cloth', description='a tattered cloth', value=1, quantity=1, armor=0):
         Item.__init__(self, name, description, value, quantity)
         self.armor = armor
-
+        self.type.append('Armor')
        
 class Currency(Item):
     """
@@ -93,8 +97,10 @@ class Currency(Item):
     =========
     Everyone knows what currency is. (eg. gold)
     """
+    
     def __init__(self, name='Gold', description='Gold Pieces', value=1, quantity=1):
         Item.__init__(self, name, description, value, quantity)
+        self.type.append('Currency')
 
 if __name__ == '__main__':
     pass
