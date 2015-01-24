@@ -31,31 +31,32 @@ def go(player, *args):
 
 def search(player, *args):
     if str(args[0]).lower() == 'room':
-        searchRoom(player)
-        return
-    for conName, container in player.location.containers:
+        ret = searchRoom(player)
+        return ret
+    for conName, container in player.location.containers.iteritems():
         if str(args[0]).lower() == conName.lower():
-            print(container._listItems())
-        
+            return container
+            
 
 def searchRoom(player):
     ret = "You look around...\n"
-    ret += "  Containers:"
+    ret += "  Containers:\n"
     if player.location.containers != None:
         for container in player.location.containers:
-            ret += "  - " + container.name + "\n"
-            ret += "\n"
+            ret += "  - " + container + "\n"
+        ret += "\n"
     else:
         ret += "    None\n"
         ret += "\n"
-    ret += "  Enemies:"
-    if player.location.enemies != None:
+    ret += "  Enemies:\n"
+    if player.location.enemies != {}:
         for enemy in player.location.enemies:
             ret += "  - " + enemy.name + "\n"
-            ret += "\n"
+        ret += "\n"
     else:
         ret += "    None\n"
-        ret += "\n"            
+        ret += "\n"
+    return ret
 
 def exit(player, *args):
     sys.exit()
@@ -116,7 +117,7 @@ def conHelp(player, *args):
 
 def get(player, *args):
     """Shows available commands"""
-    if len(args) == 1:
+    if len(args) == 2:
         if player.location.containers != None:
             for container in player.location.containers:
                 if str(args[0]).lower() == container.name.lower():
