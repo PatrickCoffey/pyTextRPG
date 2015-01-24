@@ -7,7 +7,6 @@ pyTextRPG - lib/character.py
 This module houses the character classes.
 """
 
-from entity import *
 from container import *
 from items.currency import *
 from items.weapons import *
@@ -16,7 +15,7 @@ from items.potions import *
 from items.special import *
 from items.items import *
 
-class CharacterBase(Entity):
+class CharacterBase(object):
     """
     characterBase:
     ==============
@@ -33,6 +32,7 @@ class CharacterBase(Entity):
         self.equipment = Equipment(description=self.name + '\'s Equipment')
         self.baseDamage = baseDamage
         self.baseArmor = baseArmor
+        self.location = None
     
     def _attack(self, character):
         damage = self._calcDamage(character)
@@ -111,16 +111,32 @@ class Player(CharacterBase):
     This is the players character.
     It inherits character base like all characters in the game.
     """
-        
+    _xpForLvl = {1: 50,
+                 2: 100,
+                 3: 200,
+                 4: 400,
+                 5: 800}
+    
     def __init__(self, name='Player', health=10, description='A renowned hero!', baseDamage=0, baseArmor=0):
         CharacterBase.__init__(self, name, health)
         self.description = description
+        self.xp = 0
+        self.lvl = 0
         self._startItems()
         self._refreshEquip()
         
     def _startItems(self):
-        self.inventory._addItem(Gold(), 500)
-        self.inventory._addItem(BrokenSword()) 
+        self.inventory._addItem(Gold(quantity=500))
+        self.inventory._addItem(BrokenSword())
+        #self.inventory._addItem(Cleaver())
+        
+    def _updateLvl(self):
+        for possibleLvl, xpNeeded in self._xpForLvl():
+            if self.xp < xpNeeded:
+                lvl = possibleLvl - 1
+                self.baseArmor = lvl
+                self.baseDamage = lvl
+                
 
 class Enemy(CharacterBase):
     """
@@ -130,7 +146,9 @@ class Enemy(CharacterBase):
     It inherits character base like all characters in the game.
     """
     
-    def __init__(self, name='default', health=1, typeName='default', description='default', baseDamage=0, baseArmor=0):
+    xpGain = 0
+    
+    def __init__(self, name='default', health=1, typeName='default', description='default', baseDamage=0, baseArmor=0, xpGain=10):
         CharacterBase.__init__(self, name, health)
         self.typeName = typeName
         self.description = description

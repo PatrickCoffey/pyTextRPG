@@ -25,6 +25,24 @@ class Container(dict):
         if str(itemCheck).lower() in str(self.keys()).lower():
                 return True
         return False
+    
+    def _addItem(self, Item):
+        """Adds an item to the container"""
+        if self._containsItem(Item):
+            self[Item.name].quantity += Item.quantity
+        else:
+            self[Item.name] = Item
+            self[Item.name]._refresh()
+    
+    def _removeItem(self, Item, quantity=1):
+        """Removes an item if in container"""
+        if self._containsItem(Item):
+            if self[Item.name].quantity <= quantity:
+                del self[Item.name]
+            else:
+                self[Item.name].quantity -= quantity
+        else:
+            return Item.name + ' is not in this container'     
 
         
 class Inventory(Container):
@@ -43,25 +61,6 @@ class Inventory(Container):
         Container.__init__(self, name)
         self.description = description
         
-    def _addItem(self, Item, quantity=1):
-        """Adds an item to the container"""
-        if self._containsItem(Item):
-            self[Item.name].quantity += quantity
-        else:
-            self[Item.name] = Item
-            self[Item.name].quantity = quantity
-            self[Item.name]._refresh()
-    
-    def _removeItem(self, Item, quantity=1):
-        """Removes an item if in container"""
-        if self._containsItem(Item):
-            if self[Item.name].quantity <= quantity:
-                del self[Item.name]
-            else:
-                self[Item.name].quantity -= quantity
-        else:
-            return Item.name + ' is not in this container'    
-
 
 class Equipment(Container):
     """
@@ -109,6 +108,18 @@ class Equipment(Container):
             self[slot] = None
             return retItem 
         
-
+class Chest(Container):
+    """
+    Chest:
+    ======
+    This is a chest, it holds items and gold etc...
+    """
+    
+    def __init__(self, *contents):
+        if contents != None:
+            for item in contents:
+                self._addItem(item)
+        
+    
 if __name__ == '__main__':
     pass

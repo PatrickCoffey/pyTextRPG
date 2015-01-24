@@ -30,12 +30,12 @@ class Item(object):
     
     def __init__(self, name='Thing', description='a thing', value=1, quantity=1):
         self.name = name
-        self.lowName = name.lower()
+        self.lowName = name.lower().replace(' ', '_')
         self.description = description
         self.value = value
         self.quantity = quantity
-        self.type = ['Item']
-        self._refresh()     
+        self.type.append('Item')
+        self._refresh()
     
     def __str__(self):
         return self.lowName
@@ -101,6 +101,17 @@ class Currency(Item):
     def __init__(self, name='Gold', description='Gold Pieces', value=1, quantity=1):
         Item.__init__(self, name, description, value, quantity)
         self.type.append('Currency')
+
+class ItemJunk(Item):
+    """
+    ItemJunk:
+    =========
+    This represents stuff you sell for money.
+    Its entirely useless for any other purpose.
+    """
+    
+    def __init__(self, name='Junk', description='Useless junk!', value=1, quantity=1):
+        Item.__init__(self, name, description, value, quantity)
 
 if __name__ == '__main__':
     pass

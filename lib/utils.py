@@ -9,6 +9,15 @@ Most things that dont belong to a particular class type will be here.
 """
 
 import commands as cmds
+from container import *
+from random import randint
+from lib.items.armor import *
+from lib.items.weapons import *
+from lib.items.special import *
+from lib.items.items import *
+from lib.items.currency import *
+from lib.items.potions import *
+from lib.location import *
 
 def inputText(prompt='What next?'):
     print(prompt)
@@ -64,3 +73,37 @@ def clearScreen():
     """Prints 1000 newlines to the terminal to clear screen"""
     pass
     #print('\n' * 100)
+    
+def randomChest():
+    items = randomItems(1,10)
+    chest = Chest(items)
+    return chest
+
+def randomItems(iMin, iMax):
+    ret = []
+    junk = ItemJunk
+    while counter < iMax:
+        rand = randint(1, 100)
+        if rand < 80:
+            ret.append(ItemJunk())
+        elif rand < 90:
+            if rand < 87:
+                ret.append(Cleaver())
+            else:
+                ret.append(Pike())
+        elif rand < 100:
+            if rand < 93:
+                ret.append(clothBoots())
+            elif rand < 96:
+                ret.append(clothChest())
+            elif rand < 99:
+                ret.append(clothLegs())
+            elif rand == 99:
+                ret.append(Buckler())
+        else:
+            ret.append(doublePluggers())
+    
+
+def printLocation(player):
+    print(' ~ ' + player.location.name + ' ~ ')
+    print(player.location.description)

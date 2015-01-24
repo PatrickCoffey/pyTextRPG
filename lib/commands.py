@@ -23,17 +23,47 @@ def inv(player, *args):
     """Shows the inventory of current player"""
     return 'inv'
         
-        
 def confront(player, *args):
+    return 'confront'
+
+def go(player, *args):
     pass
 
+def search(player, *args):
+    if str(args[0]).lower() == 'room':
+        searchRoom(player)
+        return
+    for container in player.location.containers:
+        pass
+        
+
+def searchRoom(player):
+    ret = "You look around...\n"
+    ret += "  Containers:"
+    if player.location.containers != None:
+        for container in player.location.containers:
+            ret += "  - " + container.name + "\n"
+            ret += "\n"
+    else:
+        ret += "    None\n"
+        ret += "\n"
+    ret += "  Enemies:"
+    if player.location.enemies != None:
+        for enemy in player.location.enemies:
+            ret += "  - " + enemy.name + "\n"
+            ret += "\n"
+    else:
+        ret += "    None\n"
+        ret += "\n"            
 
 def exit(player, *args):
     sys.exit()
         
 Commands = {'help': help,
             'inv' : inv,
+            'search': search,
             'confront': confront,
+            'go' : go,
             'exit': exit
 }
 

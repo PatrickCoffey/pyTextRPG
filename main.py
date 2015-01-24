@@ -18,13 +18,14 @@ from lib.items.special import *
 from lib.items.items import *
 from lib.items.currency import *
 from lib.items.potions import *
+from lib.location import *
 
 def inGodMenu(player):
     clearScreen()
     printCurrentItems(player)
     while True:
         sInput = inputCMD()
-        ret = parseInput(player, sInput, invCommands)
+        ret = parseInput(player, invCommands, sInput)
         if ret == 'back':
             break
         elif ret == 'show':
@@ -54,8 +55,10 @@ def inBattle(player):
 
 def main():
     playerName = getPlayerInfo()
-    player = Player(playerName)    
+    player = Player(playerName)
+    player.location = Location(containers={'Chest': randomChest()})
     while True:
+        printLocation(player)
         command = inputCMD()
         ret = parseInput(player, Commands, *command)
         
@@ -63,7 +66,7 @@ def main():
             inInventory(player)
         if ret == "god":
             inGodMenu(player)
-        if ret == "attack":
+        if ret == "confront":
             inBattle(player)
         
 
