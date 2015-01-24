@@ -7,9 +7,9 @@ pyTextRPG - lib/character.py
 This module houses the character classes.
 """
 
-from entity import Entity
-from container import Inventory, Equipment
-from item import Weapon, Gold
+from entity import *
+from container import *
+from items import *
 
 class CharacterBase(Entity):
     """

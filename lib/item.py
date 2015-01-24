@@ -87,14 +87,14 @@ class Armor(Item):
         self.armor = armor
 
        
-class Gold(Item):
+class Currency(Item):
     """
-    Gold:
-    =====
-    Everyone knows what gold is. eg. currency
+    Currency:
+    =========
+    Everyone knows what currency is. (eg. gold)
     """
-    def __init__(self):
-        Item.__init__(self, 'Gold', 'Gold Coins')
+    def __init__(self, name='Gold', description='Gold Pieces', value=1, quantity=1):
+        Item.__init__(self, name, description, value, quantity)
 
 if __name__ == '__main__':
     pass

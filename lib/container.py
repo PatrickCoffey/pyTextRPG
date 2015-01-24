@@ -88,6 +88,11 @@ class Equipment(Container):
 
     def _equipItem(self, item, slot):
         """equips new item and returns previous item from slot, None if nothing already equipped"""
+        
+        if item.type == 'Armor':
+            if not slot in item.slot:
+                return "I can't put that there!"
+        if item.type == 'Weapon'
         if self[slot] == None:
             self[slot] = item
             return None
