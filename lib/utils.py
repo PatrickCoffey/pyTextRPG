@@ -49,16 +49,25 @@ def getPlayerInfo():
             
 def parseInput(player, validCommands, *commands):
     """Parses and runs the given command if valid"""
-    commands = list(commands)
-    cmd = commands.pop(0)
-    if cmd in validCommands.iterkeys():
-        ret = validCommands[cmd](player, *commands)
-        return ret
+    if commands != []:
+        commands = list(commands)
+        cmd = commands.pop(0)
+        if cmd in validCommands.iterkeys():
+            ret = validCommands[cmd](player, *commands)
+            return ret
     elif cmd == 'god':
         return cmds.god()
         
-def printCurrentItems(player):
-    print('      ** ' + player.name + '\'s Items ** ')
+def printPlayerStats(player):
+    print('      ** ' + player.name + ' ** ')
+    print('Stats:')
+    stats = '  level: ' + str(player.lvl) + ' | '
+    stats += '  xp: ' + str(player.xp) + '\n'
+    stats += '  health: ' + str(player.health) + ' | '
+    stats += '  armor: ' + str(player.armor) + '\n'
+    stats += '  min dmg: ' + str(player.damageMin) + ' | '
+    stats += '  max dmg: ' + str(player.damageMax)
+    print(stats)
     print('Equipment:')
     for slot, item in player.equipment.items():
         if item != None:
@@ -67,22 +76,26 @@ def printCurrentItems(player):
     for item in player.inventory.itervalues():
         if item != None:
             print(' * ' + item.name + ' x' + str(item.quantity))
-    print('\n')     
-        
+    #print('\n')     
+
 def clearScreen():
-    """Prints 1000 newlines to the terminal to clear screen"""
-    pass
-    #print('\n' * 100)
+    """Prints 100 newlines to the terminal to clear screen"""
+    #pass
+    print('\n' * 100)
     
 def randomChest():
     items = randomItems(5)
-    chest = Chest(items)
+    chest = Chest()
+    for item in items:
+        chest._addItem(item)
     return chest
 
 def randomItems(iMax):
     ret = []
     junk = ItemJunk
+    counter = 0
     while counter < iMax:
+        counter += 1
         rand = randint(1, 100)
         if rand < 80:
             ret.append(ItemJunk())
@@ -102,6 +115,7 @@ def randomItems(iMax):
                 ret.append(Buckler())
         else:
             ret.append(doublePluggers())
+    return ret
     
 
 def printLocation(player):
